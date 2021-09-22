@@ -85,7 +85,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = "scrot -s ~/Desktop/temp.png" } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -96,11 +95,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-        /*
 	{ 0,		               XF86XK_AudioPlay,        spawn,	    SHCMD("playerctl --player=spotify,%any play-pause") },
 	{ 0,		               XF86XK_AudioNext,        spawn,		SHCMD("playerctl --player=spotify,%any next") },
 	{ 0,		               XF86XK_AudioPrev,        spawn,		SHCMD("playerctl --player=spotify,%any previous") },
-        */
+	{ MODKEY|ShiftMask,             XK_s,               spawn,      SHCMD("ss") },
+
 };
 
 /* button definitions */
