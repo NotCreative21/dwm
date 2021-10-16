@@ -7,9 +7,9 @@ static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "terminus:size=10" };
 static const char dmenufont[]       = "terminus:size=10";
-static const char col_gray1[]       = "#070708";               /* bar color */
+static const char col_gray1[]       = "#222832";               /* bar color */
 static const char col_gray2[]       = "#63759e";
-static const char col_gray3[]       = "#c2c5ca";               /* bar font  */
+static const char col_gray3[]       = "#9abada";               /* bar font  */
 static const char col_gray4[]       = "#b9c7cf";
 static const char col_cyan[]        = "#363E51";               /* selected bar color*/
 static const char *colors[][3]      = {
