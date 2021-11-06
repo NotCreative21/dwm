@@ -708,7 +708,7 @@ drawbar(Monitor *m)
 	Client *c;
 
 	/* draw status first so it can be overdrawn by tags later */
-	if (m == selmon) { /* status is only drawn on selected monitor */
+	if (m == selmon || 1) { /* statusallmons - draw to all monitors */
 		drw_setscheme(drw, scheme[SchemeNorm]);
 		tw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
 		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
@@ -2001,9 +2001,12 @@ updatesizehints(Client *c)
 void
 updatestatus(void)
 {
+  Monitor* m;
 	if (!gettextprop(root, XA_WM_NAME, stext, sizeof(stext)))
 		strcpy(stext, " Sean@Null");
-	drawbar(selmon);
+  /* update status on all monitors */
+	for(m = mons; m; m = m->next)
+    drawbar(m);
 }
 
 void
