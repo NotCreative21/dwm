@@ -1,7 +1,9 @@
 /* See LICENSE file for copyright and license details. */
+#include <X11/XF86keysym.h>
 
 /* appearance */
 static const unsigned int borderpx  = 0;        /* border pixel of windows */
+static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
@@ -27,8 +29,10 @@ static const Rule rules[] = {
 	 *	WM_NAME(STRING) = title
 	 */
 	/* class      instance    title       tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Firefox",  NULL,       NULL,       1 << 8,       0,           -1 },
+	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
+	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
+  { "st",       NULL,       NULL,       0,            1,           -1 },
+  { "Steam",    NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -87,6 +91,9 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("scrot -se 'xclip -selection clipboard -t image/png -i $f'") },
 	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("scrot -e 'xclip -selection clipboard -t image/png -i $f'") },
+  { MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
+ 	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
@@ -97,11 +104,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-        /*
-	{ 0,		               XF86XK_AudioPlay,        spawn,	    SHCMD("playerctl --player=spotify,%any play-pause") },
-	{ 0,		               XF86XK_AudioNext,        spawn,		SHCMD("playerctl --player=spotify,%any next") },
-	{ 0,		               XF86XK_AudioPrev,        spawn,		SHCMD("playerctl --player=spotify,%any previous") },
-        */
+	{ 0,		               XF86XK_AudioPlay,   spawn,	         SHCMD("playerctl --player=spotify,%any play-pause") },
+	{ 0,		               XF86XK_AudioNext,   spawn,		       SHCMD("playerctl --player=spotify,%any next") },
+	{ 0,		               XF86XK_AudioPrev,   spawn,		       SHCMD("playerctl --player=spotify,%any previous") },
 };
 
 /* button definitions */
