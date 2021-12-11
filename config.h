@@ -7,13 +7,13 @@ static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "terminus:size=10" };
-static const char dmenufont[]       = "terminus:size=10";
-static const char col_gray1[]       = "#222832";               /* bar color */
-static const char col_gray2[]       = "#63759e";
-static const char col_gray3[]       = "#9abada";               /* bar font  */
-static const char col_gray4[]       = "#b9c7cf";
-static const char col_cyan[]        = "#363E51";               /* selected bar color*/
+static const char *fonts[]          = { "monospace:size=8" };
+static const char dmenufont[]       = "monospace:size=8";
+static const char col_gray1[]       = "#282828";               /* bar color */
+static const char col_gray2[]       = "#a89984";
+static const char col_gray3[]       = "#ebdbb2";               /* bar font  */
+static const char col_gray4[]       = "#8ec07c";
+static const char col_cyan[]        = "#928374";               /* selected bar color*/
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
@@ -21,7 +21,7 @@ static const char *colors[][3]      = {
 };
 
 /* tagging */
-static const char *tags[] = { "λ", "ξ", "Σ", "ζ", "δ", "β", "ς", "Ψ", "Ω" };
+static const char *tags[] = { "λ", "ξ", "Σ", "ζ", "δ", "θ", "μ", "Ψ", "Ω" };
 
 static const Rule rules[] = {
 	/* xprop(1):
@@ -31,8 +31,8 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
-  { "st",       NULL,       NULL,       0,            1,           -1 },
-  { "Steam",    NULL,       NULL,       0,            1,           -1 },
+  	{ "st",       NULL,       NULL,       0,            1,           -1 },
+  	{ "Steam",    NULL,       NULL,       0,            1,           -1 },
 };
 
 /* layout(s) */
@@ -89,9 +89,9 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("scrot -se 'xclip -selection clipboard -t image/png -i $f'") },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("scrot -e 'xclip -selection clipboard -t image/png -i $f'") },
-  { MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("/home/sean/.config/scripts/screen &") },
+	{ MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("/home/sean/.config/scripts/screen2 &") },
+  	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
  	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
@@ -104,9 +104,9 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ 0,		               XF86XK_AudioPlay,   spawn,	         SHCMD("playerctl --player=spotify,%any play-pause") },
-	{ 0,		               XF86XK_AudioNext,   spawn,		       SHCMD("playerctl --player=spotify,%any next") },
-	{ 0,		               XF86XK_AudioPrev,   spawn,		       SHCMD("playerctl --player=spotify,%any previous") },
+	{ 0,		               XF86XK_AudioPlay,   spawn,  SHCMD("playerctl --player=spotify,%any play-pause") },
+	{ 0,		               XF86XK_AudioNext,   spawn,  SHCMD("playerctl --player=spotify,%any next") },
+	{ 0,		               XF86XK_AudioPrev,   spawn,  SHCMD("playerctl --player=spotify,%any previous") },
 };
 
 /* button definitions */
