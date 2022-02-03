@@ -7,7 +7,7 @@ static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "JetBrainsMonoMedium Nerd Font:size=9", "FiraCode-Regular:pixelsize=9:antialias=true:autohint=true", "monospace:size=10" };
+static const char *fonts[]          = { "JetBrainsMonoMedium Nerd Font:size=9", "FiraCode-Regular:pixelsize=9:antialias=true:autohint=true", "JoyPixels:size=9" };
 static const char dmenufont[]       = "etBrainsMonoMedium Nerd Font:size=9";
 static const char col_gray1[]       = "#1d1f21";               /* bar color */
 static const char col_gray2[]       = "#a89984";
@@ -70,6 +70,8 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("chromium") },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("discord") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -106,9 +108,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ 0,		               XF86XK_AudioPlay,   spawn,  SHCMD("playerctl --player=spotify,%any play-pause") },
-	{ 0,		               XF86XK_AudioNext,   spawn,  SHCMD("playerctl --player=spotify,%any next") },
-	{ 0,		               XF86XK_AudioPrev,   spawn,  SHCMD("playerctl --player=spotify,%any previous") },
+	{ 0,		        XF86XK_AudioPlay,      spawn,  		   SHCMD("playerctl --player=spotify,%any play-pause") },
+	{ 0,		        XF86XK_AudioNext,      spawn,  		   SHCMD("playerctl --player=spotify,%any next") },
+	{ 0,		        XF86XK_AudioPrev,      spawn,  		   SHCMD("playerctl --player=spotify,%any previous") },
+	{ 0,      	 XF86XK_AudioLowerVolume,      spawn, 		   SHCMD("decrementvol") },
+	{ 0,         XF86XK_AudioRaiseVolume,      spawn, 		   SHCMD("incrementvol") },
 };
 
 /* button definitions */
