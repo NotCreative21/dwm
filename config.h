@@ -7,12 +7,12 @@ static const unsigned int gappx     = 5;        /* gaps between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { 
-	"Iosevka Light Extended Oblique:pixelsize=12:antialiasing=true", 
-	"FiraCode-Regular:pixelsize=9:antialias=true:autohint=true", 
-	"JoyPixels:size=9" 
+static const char *fonts[]          = {
+	"Iosevka term:pixelsize=12:antialiasing=true",
+	"FiraCode-Regular:pixelsize=9:antialias=true:autohint=true",
+	"JoyPixels:size=9"
 };
-static const char dmenufont[]       = "Iosevka Light Extended Oblique:pixelsize=12:antialiasing=true";
+static const char dmenufont[]       = "Iosevka term:pixelsize=12:antialiasing=true";
 static const char col_gray1[]       = "#282828";               /* bar color */
 static const char col_gray2[]       = "#313131";               /* window border */
 static const char col_gray3[]       = "#a89984";               /* bar font  */
@@ -23,6 +23,12 @@ static const char *colors[][3]      = {
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
 	[SchemeSel]  = { col_gray4, col_gray1, col_gray2 },
 };
+
+/* bar underline */
+static const unsigned int ulinepad		= 5;
+static const unsigned int ulinestroke 	= 2;
+static const unsigned int ulinecoffset  = 0;
+static const int ulineall 				= 0;
 
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
@@ -35,7 +41,6 @@ static const Rule rules[] = {
 	/* class      instance    title       tags mask     isfloating   monitor */
 	{ "Gimp",     NULL,       NULL,       0,            0,           -1 },
 	{ "Firefox",  NULL,       NULL,       0,            0,           -1 },
-  	{ "st",       NULL,       NULL,       0,            1,           -1 },
   	{ "Steam",    NULL,       NULL,       0,            1,           -1 },
 	{ "Discord",  NULL,       NULL,       0,            1,           -1 },
 	{ "multimc",  NULL,       NULL,       0,            1,           -1 },
@@ -55,7 +60,7 @@ static const Layout layouts[] = {
 };
 
 /* key definitions, 4 is the super key for modmask */
-#define MODKEY Mod4Mask 
+#define MODKEY Mod4Mask
 #define TAGKEYS(KEY,TAG) \
 	{ MODKEY,                       KEY,      view,           {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask,           KEY,      toggleview,     {.ui = 1 << TAG} }, \
@@ -74,7 +79,7 @@ static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("chromium") },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("browser &") },
 	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("discord") },
 	{ MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
@@ -98,8 +103,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("/home/sean/.config/scripts/screen &") },
-	{ MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("/home/sean/.config/scripts/screen2 &") },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screen &") },
+	{ MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("screen2 &") },
   	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
  	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
