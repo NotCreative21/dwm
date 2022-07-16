@@ -8,16 +8,16 @@ static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = {
-	"Iosevka term:pixelsize=12:antialiasing=true",
+	"JetBrains Mono:pixelsize=12:antialiasing=true",
 	"FiraCode-Regular:pixelsize=9:antialias=true:autohint=true",
 	"JoyPixels:size=9"
 };
-static const char dmenufont[]       = "Iosevka term:pixelsize=12:antialiasing=true";
-static const char col_gray1[]       = "#282828";               /* bar color */
-static const char col_gray2[]       = "#313131";               /* window border */
-static const char col_gray3[]       = "#a89984";               /* bar font  */
-static const char col_gray4[]       = "#83a598";               /* selected tag number color*/
-static const char col_cyan[]        = "#282828";               /* selected bar color*/
+static const char dmenufont[]       = "JetBrains Mono:pixelsize=12:antialiasing=true";
+static const char col_gray1[]       = "#27282d";               /* bar color */
+static const char col_gray2[]       = "#6b7b88";               /* window border */
+static const char col_gray3[]       = "#c9d2e4";               /* bar font  */
+static const char col_gray4[]       = "#9abada";               /* selected tag number color*/
+static const char col_cyan[]        = "#27282d";               /* selected bar color*/
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },
