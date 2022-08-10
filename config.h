@@ -73,7 +73,7 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
-static const char *termcmd[]  = { "tabbed", "-r", "2", "st", "-w", "''", "-e", "mksh", NULL };
+static const char *termcmd[]  = { "tabbed", "-r", "2", "st", "-w", "''", "-e", "zsh", NULL };
 
 static Key keys[] = {
 	/* modifier                     key        function        argument */
