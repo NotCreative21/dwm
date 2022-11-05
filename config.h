@@ -1,6 +1,8 @@
 /* See LICENSE file for copyright and license details. */
 #include <X11/XF86keysym.h>
 
+#define SESSION_FILE "/tmp/dwm-session"
+
 /* appearance */
 static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int gappx     = 5;        /* gaps between windows */
@@ -132,6 +134,7 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
+	{ MODKEY|ControlMask|ShiftMask, XK_q,      quit,           {1} },
 	{ 0,		        XF86XK_AudioPlay,      spawn,  		   {.v = playerplaypause } },
 	{ 0,		        XF86XK_AudioNext,      spawn,  		   {.v = playernext } },
 	{ 0,		        XF86XK_AudioPrev,      spawn,  		   {.v = playerprevious } },
