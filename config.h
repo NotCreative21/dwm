@@ -75,13 +75,27 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, NULL };
 static const char *termcmd[]  = { "tabbed", "-r", "2", "st", "-w", "''", "-e", "zsh", NULL };
 
+static const char *playerplaypause[] = { "playerctl",  "--player=spotify,%any", "play-pause", NULL };
+static const char *playernext[] = { "playerctl",  "--player=spotify,%any", "next", NULL };
+static const char *playerprevious[] = { "playerctl",  "--player=spotify,%any", "previous", NULL };
+
+static const char *incvol[] = { "incrementvol", NULL };
+static const char *decvol[] = { "decrementvol", NULL };
+
+static const char *screenshot[] = { "screenshot", NULL };
+static const char *screenshot2[] = { "screenshot2", NULL };
+
+static const char *browser[] = { "browser", NULL };
+static const char *discord[] = { "discord", NULL };
+static const char *slock[] = { "slock", NULL };
+
 static Key keys[] = {
 	/* modifier                     key        function        argument */
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
-	{ MODKEY|ShiftMask,             XK_v,      spawn,          SHCMD("browser &") },
-	{ MODKEY|ShiftMask,             XK_e,      spawn,          SHCMD("discord") },
-	{ MODKEY|ShiftMask,             XK_l,      spawn,          SHCMD("slock") },
+	{ MODKEY|ShiftMask,             XK_v,      spawn,          {.v = browser } },
+	{ MODKEY|ShiftMask,             XK_e,      spawn,          {.v = discord } },
+	{ MODKEY|ShiftMask,             XK_l,      spawn,          {.v = slock } },
 	{ MODKEY,                       XK_b,      togglebar,      {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,      focusstack,     {.i = -1 } },
@@ -103,8 +117,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period, focusmon,       {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_comma,  tagmon,         {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_period, tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_s,      spawn,          SHCMD("screenshot &") },
-	{ MODKEY|ShiftMask,             XK_a,      spawn,          SHCMD("screenshot2 &") },
+	{ MODKEY|ShiftMask,             XK_s,      spawn,          {.v = screenshot } },
+	{ MODKEY|ShiftMask,             XK_a,      spawn,          {.v = screenshot2 } },
   	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
  	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
@@ -118,11 +132,11 @@ static Key keys[] = {
 	TAGKEYS(                        XK_8,                      7)
 	TAGKEYS(                        XK_9,                      8)
 	{ MODKEY|ShiftMask,             XK_q,      quit,           {0} },
-	{ 0,		        XF86XK_AudioPlay,      spawn,  		   SHCMD("playerctl --player=spotify,%any play-pause") },
-	{ 0,		        XF86XK_AudioNext,      spawn,  		   SHCMD("playerctl --player=spotify,%any next") },
-	{ 0,		        XF86XK_AudioPrev,      spawn,  		   SHCMD("playerctl --player=spotify,%any previous") },
-	{ 0,      	 XF86XK_AudioLowerVolume,      spawn, 		   SHCMD("decrementvol") },
-	{ 0,         XF86XK_AudioRaiseVolume,      spawn, 		   SHCMD("incrementvol") },
+	{ 0,		        XF86XK_AudioPlay,      spawn,  		   {.v = playerplaypause } },
+	{ 0,		        XF86XK_AudioNext,      spawn,  		   {.v = playernext } },
+	{ 0,		        XF86XK_AudioPrev,      spawn,  		   {.v = playerprevious } },
+	{ 0,      	 XF86XK_AudioLowerVolume,      spawn, 		   {.v = decvol } },
+	{ 0,         XF86XK_AudioRaiseVolume,      spawn, 		   {.v = incvol } },
 };
 
 /* button definitions */
