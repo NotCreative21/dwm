@@ -20,6 +20,7 @@ static const char col_gray2[]       = "#6b7b88";               /* window border 
 static const char col_gray3[]       = "#c9d2e4";               /* bar font  */
 static const char col_gray4[]       = "#9abada";               /* selected tag number color*/
 static const char col_cyan[]        = "#27282d";               /* selected bar color*/
+static const char col_borderbar[]   = "#6b7b88";
 static const char *colors[][3]      = {
 	/*               fg         bg         border   */
 	[SchemeNorm] = { col_gray3, col_gray1, col_gray2 },

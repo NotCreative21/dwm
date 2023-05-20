@@ -268,7 +268,7 @@ static Atom wmatom[WMLast], netatom[NetLast];
 static int restart = 0;
 static int running = 1;
 static Cur *cursor[CurLast];
-static Clr **scheme;
+static Clr **scheme, clrborder;
 static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
@@ -708,17 +708,22 @@ dirtomon(int dir)
 void
 drawbar(Monitor *m)
 {
-	int x, w, tw = 0;
+	int x, y = borderpx, w, tw = 0;
+	int th = bh - borderpx * 2;
+	int mw = m->ww - borderpx * 2;
 	int boxs = drw->fonts->h / 9;
 	int boxw = drw->fonts->h / 6 + 2;
 	unsigned int i, occ = 0, urg = 0;
 	Client *c;
+    XSetForeground(drw->dpy, drw->gc, clrborder.pixel);
+	XFillRectangle(drw->dpy, drw->drawable, drw->gc, 0, 0, m->ww, bh);
+
 
 	/* draw status first so it can be overdrawn by tags later */
 	if (m == selmon || 1) { /* statusallmons - draw to all monitors */
 		drw_setscheme(drw, scheme[SchemeNorm]);
 		tw = TEXTW(stext) - lrpad + 2; /* 2px right padding */
-		drw_text(drw, m->ww - tw, 0, tw, bh, 0, stext, 0);
+        drw_text(drw, mw - tw, y, tw + borderpx, th, 0, stext, 0);
 	}
 
 	for (c = m->clients; c; c = c->next) {
@@ -726,7 +731,7 @@ drawbar(Monitor *m)
 		if (c->isurgent)
 			urg |= c->tags;
 	}
-	x = 0;
+	x = borderpx;
 	for (i = 0; i < LENGTH(tags); i++) {
         /* do not draw vacant tags */
         if (!(occ & 1 << i || m->tagset[m->seltags] & 1 << i))
@@ -734,9 +739,9 @@ drawbar(Monitor *m)
 
 		w = TEXTW(tags[i]);
 		drw_setscheme(drw, scheme[m->tagset[m->seltags] & 1 << i ? SchemeSel : SchemeNorm]);
-		drw_text(drw, x, 0, w, bh, lrpad / 2, tags[i], urg & 1 << i);
+        drw_text(drw, x, y, w, th, lrpad / 2, tags[i], urg & 1 << i);
 		if (ulineall || m->tagset[m->seltags] & 1 << i) /* if there are conflicts, just move these lines directly underneath both 'drw_setscheme' and 'drw_text' :) */
-			drw_rect(drw, x + ulinepad, bh - ulinestroke - ulinecoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
+			drw_rect(drw, x + ulinepad, y + bh - ulinestroke - ulinecoffset, w - (ulinepad * 2), ulinestroke, 1, 0);
 		/*if (occ & 1 << i)
 			drw_rect(drw, x + boxs, boxs, boxw, boxw,
 				m == selmon && selmon->sel && selmon->sel->tags & 1 << i,
@@ -745,18 +750,18 @@ drawbar(Monitor *m)
 	}
 	w = blw = TEXTW(m->ltsymbol);
 	drw_setscheme(drw, scheme[SchemeNorm]);
-	x = drw_text(drw, x, 0, w, bh, lrpad / 2, m->ltsymbol, 0);
+    x = drw_text(drw, x, y, w, th, lrpad / 2, m->ltsymbol, 0);
 
-	if ((w = m->ww - tw - x) > bh) {
+    if ((w = mw - tw - x) > th) {
 		if (m->sel) {
 			int mid = (m->mw - TEXTW(m->sel->name)) /2 -x;
 			drw_setscheme(drw, scheme[m == selmon ? SchemeSel : SchemeNorm]);
-			drw_text(drw, x, 0, w, bh, mid, m->sel->name, 0);
+            drw_text(drw, x, y, w, th, lrpad / 2, m->sel->name, 0);
 			if (m->sel->isfloating)
-				drw_rect(drw, x + boxs, boxs, boxw, boxw, m->sel->isfixed, 0);
+                drw_rect(drw, x + boxs, y + boxs, boxw, boxw, m->sel->isfixed, 0);
 		} else {
 			drw_setscheme(drw, scheme[SchemeNorm]);
-			drw_rect(drw, x, 0, w, bh, 1, 1);
+			drw_rect(drw, x, y, w, bh, 1, 1);
 		}
 	}
 	drw_map(drw, m->barwin, 0, 0, m->ww, bh);
@@ -1289,7 +1294,7 @@ restoreSession(void)
 		int check = sscanf(str, "%lu %u", &winId, &tagsForWin); // get data
 		if (check != 2) // break loop if data wasn't read correctly
 			break;
-		
+
 		for (Client *c = selmon->clients; c ; c = c->next) { // add tags to every window by winId
 			if (c->win == winId) {
 				c->tags = tagsForWin;
@@ -1308,7 +1313,7 @@ restoreSession(void)
 
 	free(str);
 	fclose(fr);
-	
+
 	// delete a file
 	remove(SESSION_FILE);
 }
@@ -1631,7 +1636,7 @@ setup(void)
 	if (!drw_fontset_create(drw, fonts, LENGTH(fonts)))
 		die("no fonts could be loaded.");
 	lrpad = drw->fonts->h;
-	bh = drw->fonts->h + 2;
+    bh = drw->fonts->h + 2 + borderpx * 2;
 	updategeom();
 	/* init atoms */
 	utf8string = XInternAtom(dpy, "UTF8_STRING", False);
@@ -1656,6 +1661,7 @@ setup(void)
 	scheme = ecalloc(LENGTH(colors), sizeof(Clr *));
 	for (i = 0; i < LENGTH(colors); i++)
 		scheme[i] = drw_scm_create(drw, colors[i], 3);
+    drw_clr_create(drw, &clrborder, col_borderbar);
 	/* init bars */
 	updatebars();
 	updatestatus();
